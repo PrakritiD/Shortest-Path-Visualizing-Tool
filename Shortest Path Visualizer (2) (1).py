@@ -55,8 +55,6 @@ class Cell:
     def addNeighbours(self):
         #ngbr is a list of tuples containing the cell 
         #and a bool specifying if the ngbr is diagonal to the curr cell or not
-        
-        # can do the diagonal thing here
         ngbr = []
         if self.y - 1 >= 0 and grid[self.x][self.y - 1].isObs == False:
             ngbr.append((grid[self.x][self.y - 1], False))
@@ -74,9 +72,6 @@ class Cell:
             ngbr.append((grid[self.x - 1][self.y], False))
         if self.x-1 >= 0 and self.y-1 >= 0 and grid[self.x - 1][self.y - 1].isObs == False:
             ngbr.append((grid[self.x - 1][self.y - 1], True))   
-            
-        #for nb in ngbr:
-        #    nb[0].parent = grid[self.x][self.y]
         self.neighbours = ngbr
     
     def display_cell(self, colr, border):
@@ -241,8 +236,6 @@ def search(steps):
                 indx = i
         q = open_list[indx]
 
-
-
         q.addNeighbours()
         
         #reached goal?
@@ -254,15 +247,6 @@ def search(steps):
             root.withdraw() #or something like this
             showinfo("Result", "Path found!\nThe path length is: {0:.2f}".format(q.f))
             return True
-                    
-                #print the final path if no steps required
-              #  if steps == 0:
-               #     for cell in closed_list:
-                #        cell.display_cell((255, 178, 102), 1)
-
-            #event = pygame.event.poll()    
-            #if event.type == pygame.QUIT:
-            #    break
         
         open_list.pop(indx)
         closed_list.append(q)
@@ -273,10 +257,6 @@ def search(steps):
             ngbr = ngbr_tup[0]
             if ngbr.was_closed:
                 continue
-            #print(ngbr.parent.x)
-       #     if ngbr.isObs: dont need this, did it in add neighbours
-        #        continue
-                
             if ngbr not in closed_list:
             #calculating ngbr's g
                 g = 0
@@ -285,8 +265,6 @@ def search(steps):
                 else:
                     g = q.g + 1
             
-               
-
                 if ngbr.parent == None:
                     ngbr.parent =  q
                 
@@ -316,92 +294,22 @@ def search(steps):
                 cell.display_cell((144, 66, 245), 3)
     
     return False
-            #displaying the ngbrs
-           # if steps == 1 and not ngbr.color == (255, 178, 102):
-            #    ngbr.display_cell((102, 0, 0), 1)
-         
-            
-            
-                
-           # for cell in closed_list:
-            #    if ngbr.x == cell.x and ngbr.y == cell.y and cell.f < ngbr.f:
-             #       skip = True
-              #      break
-            #if skip:
-             #   continue
-            #else:
-                
-        
-       # if not q == start:
-        #    grid[q.x][q.y].color = (255, 178, 102)
-         #   if steps == 0:
-          #      grid[q.x][q.y].display_cell((255, 178, 102), 1)
-        
-            
-#search(var)            
-
-
-# In[ ]:
-
-
-#def main():
-    #the user selects the starting point
-    #showinfo("Starting Point", "Select starting point")
-    #for event in pygame.event.get():
-     #   if(event.type == pygame.MOUSEBUTTONDOWN):
-      #      pos = pygame.mouse.get_pos()
-       #     start.x = pos[0]//cell_size
-        #    start.y = pos[1]//cell_size
-         #   start.color = (255, 128, 0)
-          #  grid[start.x][start.y] = start
-           # start.display_cell()
-    
-    #the user selects the end point
-   # showinfo("End Point", "Select end point")
-    #for event in pygame.event.get():
-     #   if(event.type == pygame.MOUSEBUTTONDOWN):
-      #      pos = pygame.mouse.get_pos()
-       #     end.x = pos[0]//cell_size
-        #    end.y = pos[1]//cell_size
-         #   end.color = (255, 128, 0)
-          #  grid[end.x][end.y] = end
-           # end.display_cell()
-    
-    
-            
-   # response = askquestion("Steps", "Do you want to see all the steps of the algorithm?")
-   # search(var)
-   # pygame.display.update()
-    
-
 
 # In[ ]:
 
 
 res = search(var.get())
 
+#if no path found
 if not res:
     root = Tk()
     root.withdraw()
     showinfo("Path not found", "No path was found!")
-#run = True
-#while run:
-#    for event in pygame.event.get():
-#        if event.type == pygame.QUIT:
-#            run = False
-#            break 
 
+#used to close the window properly    
 while True:
     event = pygame.event.poll()    
     if event.type == pygame.QUIT:   
         break
 
 pygame.quit()
-
-
-
-# In[ ]:
-
-
-
-
